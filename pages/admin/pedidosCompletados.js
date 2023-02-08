@@ -1,24 +1,24 @@
 import useSWR from 'swr'
 import axios from 'axios';
 import AdminLayout from "@/layout/AdminLayout";
-import Orden from '@/components/Orden';
+import OrdenCompleta from '@/components/OrdenCompleta';
 
-export default function Admin() {
+export default function PedidosCompletados() {
 
-    const fetcher = () => axios('api/ordenes').then(datos => datos.data)
-    const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, {refreshInterval: 100})
+    const fetcher = () => axios('../api/ordenesCompletas').then(datos => datos.data)
+    const { data, error, isLoading } = useSWR('../api/ordenesCompletas', fetcher, {refreshInterval: 100})
 
     return (
-        <AdminLayout pagina={'Admin'}>
+        <AdminLayout pagina={'Admin - Completos'}>
             <h1 className="text-4xl font-black">Panel de Administración</h1>
             <p className="text-2xl my-10">Administra las ordenes</p>
 
             {data && data.length ? data.map(orden => 
-                <Orden 
+                <OrdenCompleta 
                     key={orden.id}
                     orden={orden}
                 />
-            ) : <p>No hay ordenes pendientes</p>}
+            ) : <p>No hay ordenes completadas</p>}
         </AdminLayout>
     )
 }
